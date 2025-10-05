@@ -5,7 +5,12 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate("/login");
+    const userExist = localStorage.getItem("mathQuizeUser")
+    if(userExist){
+      navigate("/test-config")
+    }else{
+      navigate("/login");
+    }
   };
 
   const features = [

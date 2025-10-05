@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { userContext } from "../context/context";
 const Login = () => {
   const navigate = useNavigate();
 
@@ -8,7 +8,8 @@ const Login = () => {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const {user,setuser} = useContext(userContext)
+  
   // Email format validation
   const validateEmail = (email) => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,7 +34,10 @@ const Login = () => {
       setLoading(false);
       return;
     }
-    navigate("/language");
+    const newUser = {name: name, email: email, totalAttempts: 0, correctAnswers: 0 }
+    setuser(newUser)
+    localStorage.setItem("mathQuizeUser", JSON.stringify(newUser))
+    navigate("/test-config");
   }finally{
     setLoading(false)
   }
